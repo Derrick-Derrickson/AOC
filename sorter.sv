@@ -22,15 +22,17 @@ typedef enum {
 
 state_t state;
 
-logic [15:0]  A;
-logic [15:0]  B;
+logic [31:0]  A;
+logic [31:0]  B;
 int loc_count;
+reg clean;
 
 always_ff @(posedge clk) begin
     if (!reset) begin
         state <= IDLE;
         loc_count <= 0;
         done <= 0;
+        clean <= 1;
     end else begin
 
         case (state)
@@ -39,6 +41,7 @@ always_ff @(posedge clk) begin
                     state <= COMPARE_START;
                     addr <= 0;
                     done <= 0;
+                    clean <= 1;
                 end
             end
             COMPARE_START: begin
@@ -47,13 +50,19 @@ always_ff @(posedge clk) begin
                 addr <= addr + 1;
             end
             COMPARE: begin
-                if (A > data_out) begin
-                    state <= SWAPA;
-                    we <= 1;
-                    data_in <= A;
-                    B <= data_out;
-                end else if (addr == length) begin
-                    state <= DONE;
+                if (addr >= length) begin
+                    if (clean) state <= DONE;
+                    else begin
+                        state <= COMPARE_START;
+                        addr <= 0;
+                        clean <= 1;
+                    end
+                    end else if (A > data_out) begin
+                        state <= SWAPA;
+                        we <= 1;
+                        data_in <= A;
+                        B <= data_out;
+                        clean <= 0;
                 end else begin
                     A <= data_out;
                     addr <= addr + 1;
@@ -66,9 +75,10 @@ always_ff @(posedge clk) begin
                 addr <= addr - 1;
             end
             SWAPB: begin
-                addr <= 0;
+                addr <= addr+2;
+                //A <= B;
                 we <= 0;
-                state <= COMPARE_START;
+                state <= COMPARE;
             end
             DONE: begin
                 state <= IDLE;

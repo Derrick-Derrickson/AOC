@@ -30,7 +30,7 @@ logic mem1_we;
 logic mem2_we;
 
 
-memory #(.WIDTH(16), .SIZE(2048)) mem1 (
+memory #(.WIDTH(32), .SIZE(2048)) mem1 (
     .clk(clk),
     .data_in(mem1_data_in),
     .addr(mem1_addr),
@@ -38,7 +38,7 @@ memory #(.WIDTH(16), .SIZE(2048)) mem1 (
     .data_out(mem1_data_out)
 );
 
-memory #(.WIDTH(16), .SIZE(2048)) mem2 (
+memory #(.WIDTH(32), .SIZE(2048)) mem2 (
     .clk(clk),
     .data_in(mem2_data_in),
     .addr(mem2_addr),

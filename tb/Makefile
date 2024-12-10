@@ -12,7 +12,7 @@ VERILOG_SOURCES += $(PWD)/../*.sv
 # TOPLEVEL is the name of the toplevel module in your Verilog or VHDL file
 TOPLEVEL = d1
 
-#EXTRA_ARGS = "--trace"
+EXTRA_ARGS = "--trace"
 
 # MODULE is the basename of the Python test file
 MODULE = d1_test

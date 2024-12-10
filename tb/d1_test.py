@@ -40,6 +40,8 @@ async def d1_test(dut):
     dut.valid.value = 0
     dut.done.value = 1
 
+    #wait 100ns
+    #await Timer(1000, units="ns")
     while dut.output_valid.value == 0:
         await RisingEdge(dut.clk)
     
