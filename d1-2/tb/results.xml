@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1733816895" />
+    <testcase name="d1_test" classname="d1_test" file="/home/tom/aoc/d1-2/tb/d1_test.py" lineno="19" time="246.17659330368042" sim_time_ns="9918570.001" ratio_time="40290.46737503827" />
+  </testsuite>
+</testsuites>
